@@ -18,3 +18,10 @@ website_task:
   expected_output: >
     A single https:// URL.
   agent: website_finder
+
+message_task:
+  description: >
+    Create a personalized outreach message for the founder.
+  expected_output: >
+    A markdown-formatted outreach message.
+  agent: message_compiler

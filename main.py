@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 from datetime import datetime
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from message_generation import generate_outreach_message
 
 # Load environment variables from .env file
 load_dotenv()
@@ -16,6 +17,9 @@ if not os.getenv("OPENAI_API_KEY"):
 
 if not os.getenv("SERPER_API_KEY"):
     print("Warning: SERPER_API_KEY not found in environment variables")
+
+if not os.getenv("GEMINI_API_KEY"):
+    print("Warning: GEMINI_API_KEY not found in environment variables")
 
 def research_company(founder_name, company_name):
     """
@@ -54,11 +58,21 @@ def research_company(founder_name, company_name):
             "website": f"Error: {str(e)}",
             "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         }
-
+def generate_outreach_message(founder_name, company_name, linkedin, website, about):
+        outreach_message = generate_outreach_message(
+            founder_name,
+            company_name,
+            output["linkedin"],
+            output["website"],
+            output["about"]
+        )
+        output["outreach_message"] = outreach_message
+        return output
+"""
 def process_csv(csv_file, output_file, max_workers=3):
-    """
-    Process a CSV file with founder and company information
-    """
+    
+    #Process a CSV file with founder and company information
+    
     founders_companies = []
     
     # Read the CSV file
@@ -98,7 +112,7 @@ def process_csv(csv_file, output_file, max_workers=3):
                 print(f"Error processing {founder} of {company}: {str(e)}")
     
     return results
-
+"""
 def main():
     parser = argparse.ArgumentParser(description='Research companies and their founders')
     

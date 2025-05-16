@@ -31,6 +31,13 @@ class CompanyResearchCrew:
             verbose=True
         )
         
+        self.message_agent = Agent(
+            role="Message Generator",
+            goal="Create a personalized message to the founder based on research results.",
+            backstory="Expert in crafting personalized outreach messages.",
+            verbose=True
+        )
+
         # Create tasks
         self.linkedin_task = Task(
             description="Search LinkedIn and return founder profile URL(s) for {founder_name} of {company_name}.",
@@ -55,7 +62,7 @@ class CompanyResearchCrew:
             agent=self.info_agent
         )
         self.message_generator = Task(
-            description="Generate a personalized message to the founder based on the research results. ",
+            description="Generate a personalized message to the founder based on the research results from the message_compiler.",
             expected_output="A personalized message to the founder.",
             agent=self.info_agent
         )
